@@ -172,10 +172,10 @@ function newRepo(db, workDir) {
     if (object.type === "blob") return [];
     assertType(object, "tree");
     return object.body.filter(function (entry) {
-      return entry.mode !== 0160000;
+      return entry.mode !== 57344 /* 0160000 (commit, e.g. submodule) */;
     }).map(function (entry) {
       var path = object.path + entry.name;
-      if (entry.mode === 040000) path += "/";
+      if (entry.mode === 16384 /* 0040000 (tree) */) path += "/";
       entry.path = path;
       return entry;
     });
